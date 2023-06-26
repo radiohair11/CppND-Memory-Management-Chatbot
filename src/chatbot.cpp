@@ -45,6 +45,71 @@ ChatBot::~ChatBot()
 //// STUDENT CODE
 ////
 
+// DONE: Task 2: Write the copy constructor, copy assignment operator, move constructor, and move assignment operator for ChatBot
+// Write a print statement in each indicating which has been called. E.g., 'std::cout << "ChatBot Copy Constructor" << endl;'
+
+// copy constructor
+ChatBot::ChatBot(const ChatBot& other)
+{
+    std::cout << "ChatBot Copy Constructor" << std::endl;
+
+    _chatLogic = other._chatLogic;
+    _image = other._image;
+    _currentNode = other._currentNode;
+    _rootNode = other._rootNode;
+}
+
+// move constructor
+ChatBot::ChatBot(ChatBot&& other) noexcept {
+    std::cout << "ChatBot Move Constructor" << std::endl;
+    
+    _chatLogic = other._chatLogic;
+    _image = other._image;
+    _currentNode = other._currentNode;
+    _rootNode = other._rootNode;
+
+    other._chatLogic = nullptr;
+    other._image = nullptr;
+    other._currentNode = nullptr;
+    other._rootNode = nullptr;
+}
+
+// copy assignment
+ChatBot& ChatBot::operator=(ChatBot& other) {
+    std::cout << "ChatBot Copy Assignment" << std::endl;
+
+    if(this == &other) { return *this; }
+    const auto new_chatLogic = new ChatLogic;
+    delete _chatLogic;
+    _chatLogic = new_chatLogic;
+    _image = other._image;
+    _currentNode = other._currentNode;
+    _rootNode = other._rootNode;
+    
+
+    return *this;
+}
+
+// move assignment
+ChatBot& ChatBot::operator=(ChatBot&& other) noexcept {
+    std::cout << "ChatBot Move Assignment" << std::endl;
+
+    if(this == &other) { return *this; }
+    delete _chatLogic;
+    _chatLogic = other._chatLogic;
+    _image = other._image;
+    _currentNode = other._currentNode;
+    _rootNode = other._rootNode;
+
+    other._chatLogic = nullptr;
+    other._image = nullptr;
+    other._currentNode = nullptr;
+    other._rootNode = nullptr;
+
+
+    return *this;
+}
+
 ////
 //// EOF STUDENT CODE
 

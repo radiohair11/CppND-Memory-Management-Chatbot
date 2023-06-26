@@ -11,7 +11,8 @@ GraphNode::~GraphNode()
     //// STUDENT CODE
     ////
 
-    delete _chatBot; 
+    // Task 0: _chatBot would be deleted every time a graphnode was deleted. this would lead to a double free error
+    //delete _chatBot; 
 
     ////
     //// EOF STUDENT CODE
