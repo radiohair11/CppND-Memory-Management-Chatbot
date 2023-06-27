@@ -34,10 +34,10 @@ public:
     
     // copy constructor
     ChatBot(const ChatBot&);
+        // copy assignment
+    ChatBot& operator=(const ChatBot&);
     // move constructor
     ChatBot(ChatBot&&) noexcept;
-    // copy assignment
-    ChatBot& operator=(ChatBot&);
     // move assignment
     ChatBot& operator=(ChatBot&&) noexcept;
 
