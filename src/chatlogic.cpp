@@ -161,17 +161,17 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
                             auto childNode = std::find_if(_nodes.begin(), _nodes.end(), [&childToken](std::unique_ptr<GraphNode>& node) { return node->GetID() == std::stoi(childToken->second); });
 
                             // create new edge
-                            GraphEdge *edge = new GraphEdge(id);
+                            auto edge = std::make_unique<GraphEdge>(id);
                             edge->SetChildNode(childNode->get());
                             edge->SetParentNode(parentNode->get());
-                            _edges.push_back(edge);
+                            _edges.emplace_back(edge.get());   // prefer emplace_back(), edge is a unique_ptr, so use get()
 
                             // find all keywords for current node
                             AddAllTokensToElement("KEYWORD", tokens, *edge);
 
                             // store reference in child node and parent node
-                            (*childNode)->AddEdgeToParentNode(edge);
-                            (*parentNode)->AddEdgeToChildNode(edge);
+                            (*childNode)->AddEdgeToParentNode(edge.get());      // each graph node should exclusively own the outgoing edge, so use get()
+                            (*parentNode)->AddEdgeToChildNode(std::move(edge)); // use move here so we hold non-owning references to incoming GraphEdges
                         }
 
                         ////
@@ -216,9 +216,15 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
         }
     }
 
+    ChatBot chatBot("../images/chatbot.png"); // construct a new chatbot on the stack i.e., don't use new or make_unique
+
+    chatBot.SetChatLogicHandle(this); // need to set this._chatLogic using the stack allocated chatBot
+    chatBot.SetRootNode(rootNode);    // need to set the chatBot rootNode to the one above
+    rootNode->MoveChatbotHere(std::move(chatBot));  // and now we can move the stack allocated chatbot around the node graph
+
     // add chatbot to graph root node
-    _chatBot->SetRootNode(rootNode);
-    rootNode->MoveChatbotHere(_chatBot);
+    //_chatBot->SetRootNode(rootNode);
+    //rootNode->MoveChatbotHere(_chatBot);
     
     ////
     //// EOF STUDENT CODE
