@@ -76,7 +76,7 @@ ChatBot& ChatBot::operator=(const ChatBot &other) {
 ChatBot::ChatBot(ChatBot &&other) noexcept {
     std::cout << "ChatBot Move Constructor" << std::endl;
 
-    _chatLogic = std::move(other._chatLogic);
+    _chatLogic = other._chatLogic;
     _image = other._image;
     _currentNode = other._currentNode;
     _rootNode = other._rootNode;
@@ -92,13 +92,13 @@ ChatBot& ChatBot::operator=(ChatBot&& other) noexcept {
     std::cout << "ChatBot Move Assignment" << std::endl;
     if(this == &other) { return *this; }
     
-    _chatLogic = std::move(other._chatLogic);
+    _chatLogic = other._chatLogic;
     _image = other._image;
     _currentNode = other._currentNode;
     _rootNode = other._rootNode;
 
     other._chatLogic = nullptr;
-    //other._image = nullptr;
+    other._image = NULL;
     other._currentNode = nullptr;
     other._rootNode = nullptr;
 

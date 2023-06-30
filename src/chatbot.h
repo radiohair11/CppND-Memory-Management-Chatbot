@@ -34,7 +34,7 @@ public:
     
     // copy constructor
     ChatBot(const ChatBot&);
-        // copy assignment
+    // copy assignment
     ChatBot& operator=(const ChatBot&);
     // move constructor
     ChatBot(ChatBot&&) noexcept;
