@@ -43,10 +43,11 @@ ChatLogic::~ChatLogic()
     //}
 
     // delete all edges
-    for (auto it = std::begin(_edges); it != std::end(_edges); ++it)
-    {
-        delete *it;
-    }
+    // graphNode owns edges
+    //for (auto it = std::begin(_edges); it != std::end(_edges); ++it)
+    //{
+    //    delete *it;
+    //}
 
     ////
     //// EOF STUDENT CODE
@@ -164,7 +165,8 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
                             auto edge = std::make_unique<GraphEdge>(id);
                             edge->SetChildNode(childNode->get());
                             edge->SetParentNode(parentNode->get());
-                            _edges.emplace_back(edge.get());   // prefer emplace_back(), edge is a unique_ptr, so use get()
+                            // TODO
+                            //_edges.emplace_back(edge.get());   // prefer emplace_back(), edge is a unique_ptr, so use get()
 
                             // find all keywords for current node
                             AddAllTokensToElement("KEYWORD", tokens, *edge);

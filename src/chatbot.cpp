@@ -57,6 +57,7 @@ ChatBot::ChatBot(const ChatBot &other)
     _image = new wxBitmap(*other._image);
     _currentNode = other._currentNode;
     _rootNode = other._rootNode;
+    _chatLogic->SetChatbotHandle(this);
 }
 
 // copy assignment
@@ -68,18 +69,20 @@ ChatBot& ChatBot::operator=(const ChatBot &other) {
     _image = new wxBitmap(*other._image);
     _currentNode = other._currentNode;
     _rootNode = other._rootNode;
+    _chatLogic->SetChatbotHandle(this);
 
     return *this;
 }
 
 // move constructor
-ChatBot::ChatBot(ChatBot &&other) noexcept {
+ChatBot::ChatBot(ChatBot &&other) {
     std::cout << "ChatBot Move Constructor" << std::endl;
 
     _chatLogic = other._chatLogic;
     _image = other._image;
     _currentNode = other._currentNode;
     _rootNode = other._rootNode;
+    _chatLogic->SetChatbotHandle(this);
 
     other._chatLogic = nullptr;
     other._image = nullptr;
@@ -88,14 +91,15 @@ ChatBot::ChatBot(ChatBot &&other) noexcept {
 }
 
 // move assignment
-ChatBot& ChatBot::operator=(ChatBot&& other) noexcept {
+ChatBot& ChatBot::operator=(ChatBot&& other) {
     std::cout << "ChatBot Move Assignment" << std::endl;
     if(this == &other) { return *this; }
-    
+
     _chatLogic = other._chatLogic;
     _image = other._image;
     _currentNode = other._currentNode;
     _rootNode = other._rootNode;
+    _chatLogic->SetChatbotHandle(this);
 
     other._chatLogic = nullptr;
     other._image = NULL;

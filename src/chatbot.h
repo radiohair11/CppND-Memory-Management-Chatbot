@@ -33,13 +33,13 @@ public:
     // DONE: Task 2: Declare rule of five functions/operators here
     
     // copy constructor
-    ChatBot(const ChatBot&);
+    ChatBot(const ChatBot &other);
     // copy assignment
-    ChatBot& operator=(const ChatBot&);
+    ChatBot &operator=(const ChatBot &other);
     // move constructor
-    ChatBot(ChatBot&&) noexcept;
+    ChatBot(ChatBot &&other);
     // move assignment
-    ChatBot& operator=(ChatBot&&) noexcept;
+    ChatBot &operator=(ChatBot &&other);
 
     ////
     //// EOF STUDENT CODE
